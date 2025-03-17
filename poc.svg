@@ -1,0 +1,49 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect width="100%" height="100%" fill="#f0f0f0"/>
+  
+  <text x="20" y="30" font-family="Arial" font-size="14" fill="black">
+    Instance ID: <tspan id="instance-id" font-weight="bold">Loading...</tspan>
+  </text>
+  
+  <text x="20" y="60" font-family="Arial" font-size="14" fill="black">
+    Instance Type: <tspan id="instance-type" font-weight="bold">Loading...</tspan>
+  </text>
+  
+  <text x="20" y="90" font-family="Arial" font-size="14" fill="black">
+    Availability Zone: <tspan id="availability-zone" font-weight="bold">Loading...</tspan>
+  </text>
+  
+  <text x="20" y="120" font-family="Arial" font-size="14" fill="black">
+    Public IP: <tspan id="public-ip" font-weight="bold">Loading...</tspan>
+  </text>
+  
+  <text x="20" y="150" font-family="Arial" font-size="14" fill="black">
+    Private IP: <tspan id="private-ip" font-weight="bold">Loading...</tspan>
+  </text>
+
+  <script type="text/ecmascript">
+    <![CDATA[
+      async function fetchMetadata() {
+        const metadataUrl = 'http://169.254.169.254/latest/meta-data/';
+        
+        try {
+          const instanceId = await fetch(`${metadataUrl}instance-id`).then(res => res.text());
+          const instanceType = await fetch(`${metadataUrl}instance-type`).then(res => res.text());
+          const availabilityZone = await fetch(`${metadataUrl}placement/availability-zone`).then(res => res.text());
+          const publicIp = await fetch(`${metadataUrl}public-ipv4`).then(res => res.text());
+          const privateIp = await fetch(`${metadataUrl}local-ipv4`).then(res => res.text());
+
+          document.getElementById('instance-id').textContent = instanceId;
+          document.getElementById('instance-type').textContent = instanceType;
+          document.getElementById('availability-zone').textContent = availabilityZone;
+          document.getElementById('public-ip').textContent = publicIp;
+          document.getElementById('private-ip').textContent = privateIp;
+        } catch (error) {
+          console.error('Error fetching metadata:', error);
+        }
+      }
+
+      fetchMetadata();
+    ]]>
+  </script>
+</svg>
